@@ -1,0 +1,8 @@
+.serviceForm {
+    font-size: large;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
