@@ -1,16 +1,24 @@
-import { getRequests } from "./dataAccess.js"
+import { getRequests, deleteRequest } from "./dataAccess.js"
 
 export const Requests = () => {
-    const requests = getRequests()
-    const requestList = (request) => {
-        return `<li>${request}</li>`
+    const requestArray = getRequests()
+    const requestHtml = (request) => {
+        return `<li>${request.description} at ${request.address} by ${request.neededBy}<button class="request_delete" id="request--${request.id}">Delete</button></li>`
     }
-    requestList(requests)
     let html = `
         <ul>
-            ${requests.map(requestList)}
+            ${requestArray.map((request) => requestHtml(request))}
         </ul>
     `
-
+    
     return html
 }
+
+const mainContainer = document.querySelector("#container")
+
+mainContainer.addEventListener("click", click => {
+    if (click.target.id.startsWith("request--")) {
+        const [,requestId] = click.target.id.split("--")
+        deleteRequest(parseInt(requestId))
+    }
+})
